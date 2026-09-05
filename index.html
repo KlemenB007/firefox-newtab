@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>New Tab</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap');
+
+  :root { --bg: #05050a; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* Nebula glow blobs — colorful against the dark background */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.55;
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  .blob.one   { width: 40vw; height: 40vw; background: #ff5ec4; top: -10%; left: -10%; }
+  .blob.two   { width: 45vw; height: 45vw; background: #7c4dff; bottom: -15%; right: -10%; animation-duration: 26s; }
+  .blob.three { width: 30vw; height: 30vw; background: #00e5ff; top: 40%; left: 60%; animation-duration: 32s; }
+
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(4vw, 3vw) scale(1.15); }
+  }
+
+  .quote-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 60vw;
+    text-align: center;
+    padding: 2rem;
+  }
+  .quote {
+    font-weight: 500;
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+    line-height: 1.4;
+    color: #f2f2fa;
+    letter-spacing: -0.01em;
+  }
+  .quote::before { content: "\201C"; }
+  .quote::after  { content: "\201D"; }
+
+  .hint {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.03em;
+  }
+
+  .clock {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.4);
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>
+
+  <div class="clock" id="clock"></div>
+
+  <div class="quote-wrap">
+    <div class="quote" id="quote"></div>
+    <div class="hint">click anywhere for another</div>
+  </div>
+
+<script>
+  const quotes = [
+    "Small steps, repeated daily, outrun sudden bursts of effort.",
+    "Discipline is choosing what you want most over what you want now.",
+    "You don't need to see the whole staircase, just the next step.",
+    "Progress hides inside boring, consistent days.",
+    "The work you avoid is usually the work that matters most.",
+    "Momentum is built quietly, long before it's noticed loudly.",
+    "Done today beats perfect someday.",
+    "Every skill you have now was once a beginner's fumble.",
+    "Rest is part of the work, not a break from it.",
+    "Focus is saying no to ninety-nine good ideas for one great one.",
+    "The obstacle you're avoiding is usually the shortest path forward.",
+    "Clarity comes from doing, not from more thinking.",
+    "You are one decision away from a completely different trajectory.",
+    "Consistency turns ordinary effort into extraordinary results.",
+    "Nobody remembers the version of you that gave up.",
+    "The best time to start was earlier. The next best time is now.",
+    "Comfort and growth rarely occupy the same room.",
+    "What feels hard today is training for what feels easy tomorrow.",
+    "Your future self is built entirely from today's choices.",
+    "Show up especially on the days motivation doesn't."
+  ];
+
+  function setQuote() {
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('quote').textContent = q;
+  }
+  setQuote();
+  document.body.addEventListener('click', setQuote);
+
+  function tick() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${h}:${m}`;
+  }
+  tick();
+  setInterval(tick, 1000 * 15);
+</script>
+
+</body>
+</html>
